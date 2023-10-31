@@ -92,8 +92,27 @@ public class DeviceControlProxy : DeviceControlFacade
 }
 ```
 ### Bridge Pattern
+The Bridge Pattern is a structural design pattern that separates abstraction from implementation so that the two can vary independently. In the code I have: abstraction (`RemoteControl`), implementor (`IDevice`) and the `BasicRemoteControl` is a refined abstraction that extends the abstraction (`RemoteControl`) and delegates its operations to the implementor (`IDevice`). By having `BasicRemoteControl` extend `RemoteControl` and take an `IDevice` in its constructor, the Bridge Pattern allows different implementations of `IDevice` to be used interchangeably with different `RemoteControl` objects. 
 
+```
+public class BasicRemoteControl : RemoteControl
+{
+    public BasicRemoteControl(IDevice device) : base(device) { }
 
+    public override void TurnOn()
+    {
+        Console.WriteLine("Basic Remote: Turning the device on");
+        device.TurnOn();
+    }
+
+    public override void TurnOff()
+    {
+        Console.WriteLine("Basic Remote: Turning the device off");
+        device.TurnOff();
+    }
+}
+
+```
 
 ****
 ## Conclusion
@@ -101,4 +120,4 @@ For ***Facade***: It simplifies the client code by providing a high-level interf
 <br>
 For ***Proxy***: This pattern is useful when adding an additional layer of control or behavior to an existing class without modifying its code directly. In this case, the proxy ensures that only users with administrative privileges can control the devices.
 <br>
-For ***Bridge***: 
+For ***Bridge***:  This pattern is useful for avoiding a permanent binding between an abstraction and its implementation, allowing them to vary independently. This separation also makes it easier to add new abstractions or implementations without modifying the existing code.
