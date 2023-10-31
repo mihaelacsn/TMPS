@@ -19,6 +19,7 @@ These design patterns are about organizing different classes and objects to form
 
 ## Implementation
 The Structural Patterns I used was the Bridge Pattern, Facade Pattern and the Proxy Pattern.
+### Facade Pattern
 <br>
 In the `DeviceControlFacade` class is an example of a design pattern called the facade pattern. It provides a simplified interface to a set of interfaces in a subsystem, making it easier to use. It has the goal to simplify the process of turning on and off various devices (TV, radio, light) by providing two methods: TurnOnAllDevices and TurnOffAllDevices. I have an Interfaces (`IDevice`), that allows to treat these devices uniformly through a common interface. Facade Class (`DeviceControlFacade`) acts as a facade, providing a simplified interface for controlling multiple devices at once. The constructor initializes instances of the concrete device classes (TV, radio, light). Last, but not least, the methods call the respective `TurnOn()` and `TurnOff()` methods on each device. This encapsulates the complexity of interacting with individual devices.
 
@@ -51,7 +52,7 @@ public class DeviceControlFacade
     }
 }
 ```
-
+### Proxy Pattern
 The `DeviceControlProxy` class is implementing the Proxy pattern, which allows to control access to the `DeviceControlFacade` class based on certain conditions. Here it checks if the user has administrative privileges before allowing them to turn on or off all devices.
   1. Inheritance: `DeviceControlProxy` -> inherits from `DeviceControlFacade`. This means that `DeviceControlProxy` has the same methods as `DeviceControlFacade` and can override or extend their behavior.
   2. Additional State: DeviceControlProxy introduces a new boolean variable `isAdmin` to determine whether the user has administrative privileges or not.
@@ -91,6 +92,8 @@ public class DeviceControlProxy : DeviceControlFacade
     }
 }
 ```
+### Bridge Pattern
+
 
 
 ****
