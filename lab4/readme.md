@@ -15,9 +15,14 @@ Command objects serve as links between various GUI and business logic objects. F
 Observer is a behavioral design pattern that lets you define a subscription mechanism to notify multiple objects about any events that happen to the object they’re observing. The Observer pattern suggests that you add a subscription mechanism to the publisher class so individual objects can subscribe to or unsubscribe from a stream of events coming from that publisher. In reality, this mechanism consists of 1) an array field for storing a list of references to subscriber objects and 2) several public methods which allow adding subscribers to and removing them from that list.
 
 ## Implementation
+1. The Observer pattern is used to notify various observers (such as `DeviceObserver` and `RemoteControlDisplay`) about the state changes of the TV.
+2. The State pattern is employed to manage the different states (on and off) of the TV and to encapsulate the behavior associated with each state.
+3. The Command pattern is applied with the `TurnOnCommand` and `TurnOffCommand` classes, allowing the remote control to encapsulate the commands and execute them without knowing the details of the TV's implementation
 
-
-
+<b>The interfaces:</b>
+    1. `IDevice` defines the interface for a device (e.g., TV) that can be turned on/off, and it allows observers to register and unregister.
+    2. `IDeviceObserver` defines the interface for observers that can receive updates about the device state changes.
+   3. `IDeviceState` defines the interface for different states of the device, each with methods to handle turning on and off.
 
 ****
 ## Conclusion
