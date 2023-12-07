@@ -16,13 +16,91 @@ Observer is a behavioral design pattern that lets you define a subscription mech
 
 ## Implementation
 1. The Observer pattern is used to notify various observers (such as `DeviceObserver` and `RemoteControlDisplay`) about the state changes of the TV.
+```
+public class DeviceObserver : IDeviceObserver
+{
+    public void UpdateState(string state)
+    {
+        Console.WriteLine($"Observer: {state}");
+    }
+}
+```
+```
+public class RemoteControlDisplay : IDeviceObserver
+{
+    public void UpdateState(string state)
+    {
+        Console.WriteLine($"Remote Control Display: {state}");
+    }
+}
+```
 2. The State pattern is employed to manage the different states (on and off) of the TV and to encapsulate the behavior associated with each state.
-3. The Command pattern is applied with the `TurnOnCommand` and `TurnOffCommand` classes, allowing the remote control to encapsulate the commands and execute them without knowing the details of the TV's implementation
+```
+public interface IDeviceState
+{
+    void HandleTurnOn();
+    void HandleTurnOff();
+}
+public class DeviceOffState : IDeviceState
+{
+    public void HandleTurnOn()
+    {
+        Console.WriteLine("Turning device on");
+    }
 
+    public void HandleTurnOff()
+    {
+        Console.WriteLine("Device is already off");
+    }
+}
+public class DeviceOnState : IDeviceState
+{
+    public void HandleTurnOn()
+    {
+        Console.WriteLine("Device is already on");
+    }
+
+    public void HandleTurnOff()
+    {
+        Console.WriteLine("Turning device off");
+    }
+}
+```
+3. The Command pattern is applied with the `TurnOnCommand` and `TurnOffCommand` classes, allowing the remote control to encapsulate the commands and execute them without knowing the details of the TV's implementation
+```
+public class TurnOnCommand : ICommand
+{
+    private IDevice device;
+
+    public TurnOnCommand(IDevice device)
+    {
+        this.device = device;
+    }
+
+    public void Execute()
+    {
+        device.TurnOn();
+    }
+}
+public class TurnOffCommand : ICommand
+{
+    private IDevice device;
+
+    public TurnOffCommand(IDevice device)
+    {
+        this.device = device;
+    }
+
+    public void Execute()
+    {
+        device.TurnOff();
+    }
+}
+```
 <b>The interfaces:</b>
-    1. `IDevice` defines the interface for a device (e.g., TV) that can be turned on/off, and it allows observers to register and unregister.
-    2. `IDeviceObserver` defines the interface for observers that can receive updates about the device state changes.
-   3. `IDeviceState` defines the interface for different states of the device, each with methods to handle turning on and off.
+1. `IDevice` defines the interface for a device (e.g., TV) that can be turned on/off, and it allows observers to register and unregister.
+2. `IDeviceObserver` defines the interface for observers that can receive updates about the device state changes.
+3. `IDeviceState` defines the interface for different states of the device, each with methods to handle turning on and off.
 
 ****
 ## Conclusion
